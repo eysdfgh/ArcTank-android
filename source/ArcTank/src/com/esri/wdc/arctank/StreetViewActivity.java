@@ -17,6 +17,7 @@ import android.widget.ImageView;
 public class StreetViewActivity extends Activity {
     
     private static final String TAG = StreetViewActivity.class.getSimpleName();
+    private static final String STREET_VIEW_KEY = null;
     
     public static final String EXTRA_LONGITUDE = "com.esri.wdc.arctank.Longitude";
     public static final String EXTRA_LATITUDE = "com.esri.wdc.arctank.Latitude";
@@ -34,9 +35,13 @@ public class StreetViewActivity extends Activity {
         streetView.post(new Runnable() {
             public void run() {
                 try {
-                    URL url = new URL("https://maps.googleapis.com/maps/api/streetview?size="
-                            + streetView.getWidth() + "x" + streetView.getHeight()
-                            + "&location=" + latitude + "," + longitude + "&fov=90&heading=235&pitch=10");
+                    StringBuilder urlString = new StringBuilder("https://maps.googleapis.com/maps/api/streetview?size=")
+                            .append(streetView.getWidth()).append("x").append(streetView.getHeight())
+                            .append("&location=").append(latitude).append(",").append(longitude).append("&fov=90&heading=235&pitch=10");
+                    if (null != STREET_VIEW_KEY) {
+                        urlString.append("key=").append(STREET_VIEW_KEY);
+                    }
+                    URL url = new URL(urlString.toString());
                     Log.d(TAG, "width x height is " + streetView.getWidth() + " x " + streetView.getHeight());
                     AsyncTask<URL, Integer, Long> task = new AsyncTask<URL, Integer, Long>() {
                         
