@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ArcTank</string>
+    <string name="title_activity_street_view">Street View</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="street_view_content_description">Street View image</string>
+
+</resources>
