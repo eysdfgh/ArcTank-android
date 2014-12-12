@@ -2,7 +2,6 @@ package com.esri.wdc.arctank;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.esri.android.map.MapView;
@@ -11,15 +10,11 @@ import com.esri.android.toolkit.map.MapViewHelper;
 import com.esri.core.geometry.GeometryEngine;
 import com.esri.core.geometry.Point;
 import com.esri.core.geometry.SpatialReference;
-import com.esri.core.tasks.geocode.Locator;
 
 public class ArcTankActivity extends Activity {
 
     MapView mMapView;
     MapViewHelper mvHelper;
-    Locator locator;
-
-    Drawable icon;
 
     /** Called when the activity is first created. */
     @Override
@@ -35,13 +30,6 @@ public class ArcTankActivity extends Activity {
         mMapView.setEsriLogoVisible(true);
         // Create a MapView Helper
         mvHelper = new MapViewHelper(mMapView);
-        // Create drawable icon
-        icon = getResources().getDrawable(R.drawable.route_destination);
-
-        // initialize online locator
-        locator = Locator.createOnlineLocator();
-
-        final String[] fields = { "Address", "City", "Region", "Postal" };
 
         // single tap on map to get the address of the location tapped
         mMapView.setOnSingleTapListener(new OnSingleTapListener() {
