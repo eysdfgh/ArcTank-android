@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.esri.android.map.MapView;
 import com.esri.android.map.event.OnSingleTapListener;
-import com.esri.android.map.event.OnStatusChangedListener;
 import com.esri.android.toolkit.map.MapViewHelper;
 import com.esri.core.geometry.GeometryEngine;
 import com.esri.core.geometry.Point;
@@ -39,27 +37,6 @@ public class ArcTankActivity extends Activity {
         mvHelper = new MapViewHelper(mMapView);
         // Create drawable icon
         icon = getResources().getDrawable(R.drawable.route_destination);
-
-        mMapView.setOnStatusChangedListener(new OnStatusChangedListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onStatusChanged(Object source, STATUS status) {
-                // Add a graphic to represent ESRI Headquarters
-                int loaded = mvHelper.addMarkerGraphic(
-                        34.056695,
-                        -117.195693,
-                        "ESRI",
-                        "World Headquarters",
-                        null,
-                        icon,
-                        false,
-                        0);
-                if (loaded < 0) {
-                    Log.d("TAG", "Marker Graphic not added to MapView");
-                }
-            }
-        });
 
         // initialize online locator
         locator = Locator.createOnlineLocator();
