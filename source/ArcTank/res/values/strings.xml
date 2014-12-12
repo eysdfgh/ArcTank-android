@@ -6,5 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="street_view_content_description">Street View image</string>
+    <string name="next_image_to_left">next image to left</string>
+    <string name="next_image_to_right">next image to right</string>
 
 </resources>

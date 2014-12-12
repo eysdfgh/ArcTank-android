@@ -9,17 +9,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.esri.wdc.arctank.SimpleGestureFilter.SimpleGestureListener;
-
-public class StreetViewActivity extends Activity implements
-        SimpleGestureListener {
+public class StreetViewActivity extends Activity {
 
     private static final String TAG = StreetViewActivity.class.getSimpleName();
     private static final String STREET_VIEW_KEY = null;
@@ -27,23 +22,14 @@ public class StreetViewActivity extends Activity implements
     public static final String EXTRA_LONGITUDE = "com.esri.wdc.arctank.Longitude";
     public static final String EXTRA_LATITUDE = "com.esri.wdc.arctank.Latitude";
 
-    private SimpleGestureFilter simpleGestureFilter;
     private int heading = 0;
     private double longitude = 0;
     private double latitude = 0;
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        simpleGestureFilter.onTouchEvent(ev);
-        return super.dispatchTouchEvent(ev);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_street_view);
-        
-        simpleGestureFilter = new SimpleGestureFilter(this, this);
 
         Bundle extras = getIntent().getExtras();
         longitude = extras.getDouble(EXTRA_LONGITUDE);
@@ -58,18 +44,13 @@ public class StreetViewActivity extends Activity implements
             public void run() {
                 try {
                     StringBuilder urlString = new StringBuilder(
-                            "https://maps.googleapis.com/maps/api/streetview?size=")
-                            .append(streetView.getWidth()).append("x")
-                            .append(streetView.getHeight())
-                            .append("&location=").append(latitude).append(",")
-                            .append(longitude)
-                            .append("&fov=90&heading=").append(heading).append("&pitch=10");
+                            "https://maps.googleapis.com/maps/api/streetview?size=640x640&location=")
+                            .append(latitude).append(",").append(longitude)
+                            .append("&fov=120&heading=").append(heading).append("&pitch=0");
                     if (null != STREET_VIEW_KEY) {
-                        urlString.append("key=").append(STREET_VIEW_KEY);
+                        urlString.append("&key=").append(STREET_VIEW_KEY);
                     }
                     URL url = new URL(urlString.toString());
-                    Log.d(TAG, "width x height is " + streetView.getWidth()
-                            + " x " + streetView.getHeight());
                     AsyncTask<URL, Integer, Long> task = new AsyncTask<URL, Integer, Long>() {
 
                         @Override
@@ -102,6 +83,20 @@ public class StreetViewActivity extends Activity implements
             }
         });
     }
+    
+    public void nextImageToLeft(View view) {
+        adjustHeading(-45);
+    }
+    
+    public void nextImageToRight(View view) {
+        adjustHeading(45);
+    }
+    
+    private void adjustHeading(double delta) {
+        this.heading += delta;
+        normalizeHeading();
+        replaceImage();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -121,24 +116,6 @@ public class StreetViewActivity extends Activity implements
         }
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public void onSwipe(int direction) {
-        switch (direction) {
-
-        case SimpleGestureFilter.SWIPE_RIGHT:
-            heading += 90;
-            break;
-        case SimpleGestureFilter.SWIPE_LEFT:
-            heading -= 90;
-            break;
-        default:
-            return;
-            
-        }
-        normalizeHeading();
-        replaceImage();
-    }
     
     private void normalizeHeading() {
         while (360 <= heading) {
@@ -147,11 +124,6 @@ public class StreetViewActivity extends Activity implements
         while (0 > heading) {
             heading += 360;
         }
-    }
-
-    @Override
-    public void onDoubleTap() {
-        Toast.makeText(this, "Double Tap", Toast.LENGTH_SHORT).show(); 
     }
     
 }

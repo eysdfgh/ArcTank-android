@@ -13,5 +13,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/street_view_content_description" />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_action_previous_item"
+        android:contentDescription="@string/next_image_to_left"
+        android:onClick="nextImageToLeft" />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_action_next_item"
+        android:contentDescription="@string/next_image_to_right"
+        android:onClick="nextImageToRight" />
+    
 
 </RelativeLayout>
