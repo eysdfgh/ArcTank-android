@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.esri.android.map.MapView;
 import com.esri.android.map.event.OnSingleTapListener;
-import com.esri.android.toolkit.map.MapViewHelper;
+//import com.esri.android.toolkit.map.MapViewHelper;
 import com.esri.core.geometry.GeometryEngine;
 import com.esri.core.geometry.Point;
 import com.esri.core.geometry.SpatialReference;
@@ -14,7 +14,7 @@ import com.esri.core.geometry.SpatialReference;
 public class ArcTankActivity extends Activity {
 
     MapView mMapView;
-    MapViewHelper mvHelper;
+//    MapViewHelper mvHelper;
 
     /** Called when the activity is first created. */
     @Override
@@ -29,7 +29,7 @@ public class ArcTankActivity extends Activity {
         // set logo visible
         mMapView.setEsriLogoVisible(true);
         // Create a MapView Helper
-        mvHelper = new MapViewHelper(mMapView);
+//        mvHelper = new MapViewHelper(mMapView);
 
         // single tap on map to get the address of the location tapped
         mMapView.setOnSingleTapListener(new OnSingleTapListener() {
